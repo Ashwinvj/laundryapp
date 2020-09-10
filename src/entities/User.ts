@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import Address from './address';
 import { Order } from './order';
+import { Payment } from './payment';
 
 @Entity()
 export class User {
@@ -36,6 +37,9 @@ export class User {
 
     @ManyToMany(() => Order, (order : Order) => order.user)
     order : Order;
+
+    @OneToMany(() => Payment, (payment : Payment) => payment.user)
+    payment : Payment;
 
   
 

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 import { Service } from "./service";
+import { Payment } from "./payment";
 
 @Entity()
 export class ServiceProvider {
@@ -57,6 +58,9 @@ export class ServiceProvider {
   
     @OneToMany(() => Service, (service: Service) => service.serviceProvider)
     service: Service;
+
+    @OneToMany(() => Payment, (payment: Payment) => payment.serviceProvider)
+    payment: Payment;
 
 }
 
