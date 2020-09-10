@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 import bcrypt from 'bcryptjs';
-import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn, OneToOne, OneToMany, ManyToMany } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import Address from './address';
 import { Order } from './order';
-=======
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany} from "typeorm";
-import { Address } from "./Address";
-import { Product } from "./product";
->>>>>>> 274f3bf3821de637508242cd8b20f31b1a2f2f1d
 
 @Entity()
 export class User {
@@ -31,42 +25,25 @@ export class User {
     @Column()
     age: number;
 
-<<<<<<< HEAD
-  @Column()
-  mobile: string;
-
-  @Column()
-  password: string;
-
-  @OneToMany(() => Address, (address: Address) => address.user)
-  address: Address[];
-
-  @ManyToMany(() => Order, (order : Order) => order.user)
-  order : Order;
-=======
     @Column()
-    email: string;
+     mobile: string;
 
     @Column()
     password: string;
 
-    @Column()
-    phoneNumber: number;
->>>>>>> 274f3bf3821de637508242cd8b20f31b1a2f2f1d
-
     @OneToMany(() => Address, (address: Address) => address.user)
     address: Address[];
 
-<<<<<<< HEAD
+    @ManyToMany(() => Order, (order : Order) => order.user)
+    order : Order;
+
+  
+
   @BeforeInsert()
   async setPassword() {
     // console.log("password",newPassword,this.password)
    this.password = await bcrypt.hash(this.password,10);
   }
-=======
-    @ManyToMany(() => Product, (product : Product) => product.user)
-    product : Product;
->>>>>>> 274f3bf3821de637508242cd8b20f31b1a2f2f1d
 
   
 }

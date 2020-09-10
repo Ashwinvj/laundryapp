@@ -1,7 +1,8 @@
-import { Entity, PrimaryColumn, PrimaryGeneratedColumn, ManyToMany, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToMany, Column } from "typeorm";
 import { User } from "./User";
 import { SubService } from "./subService";
 import { OrderStatus } from "./orderStatus";
+import { Payment } from "./payment";
 
 @Entity()
 export class Order {
@@ -50,8 +51,8 @@ export class Order {
     @ManyToMany(() => SubService, (subService :SubService) => subService.order)
     subService: SubService ;
 
-    @ManyToMany(() => Payment, (usere :User) => usere.order)
-    payment: User ;
+    @ManyToMany(() => Payment, (payment :Payment) => payment.order)
+    payment: Payment ;
 
     @ManyToMany(() =>OrderStatus, (orderStatus :OrderStatus) => orderStatus.order)
     orderStatus: OrderStatus;

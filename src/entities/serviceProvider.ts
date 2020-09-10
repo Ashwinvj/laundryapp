@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import {Address } from "./address";
-import { User } from "./User";
+
 import { Service } from "./service";
 
 @Entity()
@@ -55,13 +54,9 @@ export class ServiceProvider {
     @Column()
     longitude: string;
 
-    
-
+  
     @OneToMany(() => Service, (service: Service) => service.serviceProvider)
     service: Service;
-
-    //@OneToMany(() => ProductDetail, (productDetail: ProductDetail) => productDetail.seller)
-    //productDetail: ProductDetail[];
 
 }
 

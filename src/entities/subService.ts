@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from "typeorm";
-import { User } from "./User";
 import { Service } from "./service";
 import { Order } from "./order";
 

@@ -16,13 +16,10 @@ export class OrderStatus {
   @ManyToMany(() => Order, (order :Order) => order.orderStatus)
   order: Order ;
 
-  //@ManyToMany(() => Order, (order :Order) => order.currentStatus)
-  //order: Order ;
+  @Column()
+  status: string;
 
   @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
+  time : string;
   
 }
