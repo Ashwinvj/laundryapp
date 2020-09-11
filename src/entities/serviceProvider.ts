@@ -2,9 +2,10 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 import { Service } from "./service";
 import { Payment } from "./payment";
+import { UpdateDate } from "./updateTime";
 
 @Entity()
-export class ServiceProvider {
+export class ServiceProvider extends UpdateDate{
     static create(serviceProviderdata: ServiceProvider): ServiceProvider | PromiseLike<ServiceProvider> {
         throw new Error("Method not implemented.");
       }
@@ -54,6 +55,9 @@ export class ServiceProvider {
 
     @Column()
     longitude: string;
+
+    @Column()
+    isRetired: boolean = false;
 
   
     @OneToMany(() => Service, (service: Service) => service.serviceProvider)

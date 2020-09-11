@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 import { Service } from "./service";
 import { Order } from "./order";
+import { UpdateDate } from "./updateTime";
 
 @Entity()
-export class SubService{
+export class SubService extends UpdateDate{
     static create(productData: SubService): SubService | PromiseLike<SubService> {
         throw new Error("Method not implemented.");
       }
@@ -30,10 +31,13 @@ export class SubService{
     @Column()
     active : true;
 
+    @Column()
+    isRetired: boolean = false;
+
     @ManyToOne(() => Service, (service :Service) => service.subService)
     service: Service;
 
-    @ManyToMany(() => Order, (order :Order) => order.subService)
+    @OneToMany(() => Order, (order :Order) => order.subService)
     order: Order;
 
 

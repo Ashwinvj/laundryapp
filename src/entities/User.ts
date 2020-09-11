@@ -3,9 +3,10 @@ import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyTo
 import Address from './address';
 import { Order } from './order';
 import { Payment } from './payment';
+import { UpdateDate } from './updateTime';
 
 @Entity()
-export class User {
+export class User  extends UpdateDate{
     [x: string]: any;
     static findOne(arg0: { where: { userId: any; }; relations: string[]; }) {
         throw new Error("Method not implemented.");
@@ -32,10 +33,13 @@ export class User {
     @Column()
     password: string;
 
+    @Column()
+    isRetired: boolean = false;
+
     @OneToMany(() => Address, (address: Address) => address.user)
     address: Address[];
 
-    @ManyToMany(() => Order, (order : Order) => order.user)
+    @OneToMany(() => Order, (order : Order) => order.user)
     order : Order;
 
     @OneToMany(() => Payment, (payment : Payment) => payment.user)
