@@ -1,6 +1,7 @@
 import { ServiceProvider } from "../entities/serviceProvider.entity";
 import { Repository, getManager } from "typeorm";
 import { Logger,ILogger } from "../utils/logger";
+import serviceProviderRouter from "../controllers/serviceProviderController";
 
 
 
@@ -67,12 +68,12 @@ export class ServiceProviderService {
   }
 
   /**
-   * Updates a user
+   * Updates a serviceProvider
    */
-  async update(user:ServiceProvider): Promise<ServiceProvider | undefined> {
+  async update(serviceProvider:ServiceProvider): Promise<ServiceProvider | undefined> {
     try {
-      const updatedUser = await this.userRepository.save(user);
-      return updatedUser;
+      const updatedServiceProvider = await this.userRepository.save(serviceProvider);
+      return updatedServiceProvider;
     } catch (error) {
       return Promise.reject(error);
     }
