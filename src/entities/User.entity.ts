@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
-import Address from './address';
-import { Order } from './order';
-import { Payment } from './payment';
-import { UpdateDate } from './updateTime';
+import Address from './address.entity';
+import { Order } from './order.entity';
+import { Payment } from './payment.entity';
+import { UpdateDate } from './updateTime.entity';
 
 @Entity()
 export class User  extends UpdateDate{
@@ -33,17 +33,17 @@ export class User  extends UpdateDate{
     @Column()
     password: string;
 
-    @Column()
-    isRetired: boolean = false;
+    @Column({default:false})
+    isRetired: boolean
 
     @OneToMany(() => Address, (address: Address) => address.user)
     address: Address[];
 
     @OneToMany(() => Order, (order : Order) => order.user)
-    order : Order;
+    order : Order[];
 
     @OneToMany(() => Payment, (payment : Payment) => payment.user)
-    payment : Payment;
+    payment : Payment[];
 
   
 

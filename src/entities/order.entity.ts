@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, ManyToMany, Column, ManyToOne } from "typeorm";
-import { User } from "./User";
-import { SubService } from "./subService";
-import { OrderStatus } from "./orderStatus";
-import { Payment } from "./payment";
-import { UpdateDate } from "./updateTime";
+import { User } from "./User.entity";
+import { SubService } from "./subService.entity";
+import { OrderStatus } from "./orderStatus.entity";
+import { Payment } from "./payment.entity";
+import { UpdateDate } from "./updateTime.entity";
 
 @Entity()
 export class Order extends UpdateDate {
@@ -50,16 +50,16 @@ export class Order extends UpdateDate {
     isRetired: boolean = false;
 
     @ManyToOne(() => User, (user :User) => user.order)
-    user: User ;
+    user: User[] ;
 
     @ManyToOne(() => SubService, (subService :SubService) => subService.order)
-    subService: SubService ;
+    subService: SubService[];
 
     @ManyToOne(() => Payment, (payment :Payment) => payment.order)
-    payment: Payment ;
+    payment: Payment[] ;
 
     @ManyToMany(() =>OrderStatus, (orderStatus :OrderStatus) => orderStatus.order)
-    orderStatus: OrderStatus;
+    orderStatus: OrderStatus[];
 
     //@ManyToMany(() => User, (usere :User) => usere.order)
     //currentStatus: User ;

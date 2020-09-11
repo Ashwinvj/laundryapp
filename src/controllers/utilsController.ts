@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import * as HttpStatus from 'http-status-codes';
 import { getManager } from 'typeorm';
 
-import { User } from '../entities/User';
+import { User } from '../entities/User.entity';
 import { AuthHandler } from '../middlewares/authHandler';
 import { ApiResponseError } from '../resources/interfaces/ApiResponseError';
 import { UserService } from '../services/users.service';

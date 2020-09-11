@@ -17,7 +17,7 @@ loginRouter.route('/')
     [
       
       body('email').isEmail(),
-      body('password').isLength({ min: 1 }),
+      body('password').isLength({ min: 1 })
     ],
     async (req: Request, res: Response, next: NextFunction) => {
 
@@ -25,7 +25,7 @@ loginRouter.route('/')
       if (validationErrors.isEmpty()) { // no error
         const userService = new UserService();
         let user = await userService.getByEmail(req.body.email);
-        /* if (!user) {
+         if (!user) {
           res.status(HttpStatus.BAD_REQUEST).json({
             success: false,
             message: `${errors.emailNotFound}`
@@ -35,7 +35,7 @@ loginRouter.route('/')
         
 
         // now compare password
-        */
+        
         const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
         // generate token and return
         
@@ -58,7 +58,7 @@ loginRouter.route('/')
           next(error);
           return;
         }
-        /*
+        
       } else {  // validation error
         const error: ApiResponseError = {
           code: HttpStatus.BAD_REQUEST,
@@ -66,8 +66,8 @@ loginRouter.route('/')
         };
         next(error);
       }
-      */
+      
 
-    }});
+    });
 
 export default loginRouter;

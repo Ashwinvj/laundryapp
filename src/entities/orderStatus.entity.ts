@@ -1,6 +1,6 @@
 import { PrimaryGeneratedColumn, Column, ManyToMany, Entity } from "typeorm";
-import { Order } from "./order";
-import { UpdateDate } from "./updateTime";
+import { Order } from "./order.entity";
+import { UpdateDate } from "./updateTime.entity";
 
 @Entity()
 export class OrderStatus extends UpdateDate{
@@ -16,7 +16,7 @@ export class OrderStatus extends UpdateDate{
   isRetired: boolean = false;
 
   @ManyToMany(() => Order, (order :Order) => order.orderStatus)
-  order: Order ;
+  order: Order[] ;
 
   @Column()
   status: string;

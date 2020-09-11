@@ -4,7 +4,6 @@ import config from '../config/config';
 import * as HttpStatus from 'http-status-codes';
 import { ApiResponseError } from '../resources/interfaces/ApiResponseError';
 import { ProductService } from "../services/product.service";
-import { ProductDetail } from "../entities/service";
 
 
 

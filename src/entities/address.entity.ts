@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
-import { User } from "./User";
+import { User } from "./User.entity";
+import { ServiceProvider } from "./serviceProvider.entity";
 
 
 @Entity()
@@ -42,7 +43,12 @@ export class Address {
 
   @ManyToOne(() => User, (user: User) => user.address,{
   onDelete: "CASCADE"})
-  user: User;
+  user: User[];
+
+  @ManyToOne(() => ServiceProvider, (serviceProvider: ServiceProvider) => serviceProvider.address,{
+    onDelete: "CASCADE"})
+    serviceProvider: User[];
+  
 
 }
 export default Address;

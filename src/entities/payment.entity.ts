@@ -1,9 +1,9 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, OneToMany } from "typeorm";
-import User from "./User";
-import { ServiceProvider } from "./serviceProvider";
-import { OrderStatus } from "./orderStatus";
-import { Order } from "./order";
-import { UpdateDate } from "./updateTime";
+import User from "./User.entity";
+import { ServiceProvider } from "./serviceProvider.entity";
+import { OrderStatus } from "./orderStatus.entity";
+import { Order } from "./order.entity";
+import { UpdateDate } from "./updateTime.entity";
 
 @Entity()
 export class Payment extends UpdateDate {
@@ -43,13 +43,13 @@ export class Payment extends UpdateDate {
     isRetired: boolean = false;
 
     @ManyToOne(() => User, (user :User) => user.payment)
-    paidBy : User ;
+    paidBy : User[] ;
 
     @OneToMany(() => Order, (order :Order) => order.payment)
-    order : Order ;
+    order : Order[] ;
 
     @ManyToOne(() => ServiceProvider, (serviceProvider :ServiceProvider) => serviceProvider.payment)
-    paidTo: ServiceProvider ;
+    paidTo: ServiceProvider[] ;
 
 
     

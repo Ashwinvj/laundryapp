@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-
-import { Service } from "./service";
-import { Payment } from "./payment";
-import { UpdateDate } from "./updateTime";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeInsert } from "typeorm";
+import bcrypt from 'bcryptjs';
+import { Service } from "./service.entity";
+import { Payment } from "./payment.entity";
+import { UpdateDate } from "./updateTime.entity";
+import Address from "./address.entity";
 
 @Entity()
 export class ServiceProvider extends UpdateDate{
@@ -18,7 +19,7 @@ export class ServiceProvider extends UpdateDate{
     id: number;
 
     @Column()
-    Name: string;
+    name: string;
 
     @Column()
     description: string;
@@ -33,24 +34,6 @@ export class ServiceProvider extends UpdateDate{
     active: true;
 
     @Column()
-    address_line_1: string;
-
-    @Column()
-    address_line_2: string;
-
-    @Column()
-    city: string;
-
-    @Column()
-    state: string;
-
-    @Column()
-    pincode: number;
-
-    @Column()
-    country: string;
-
-    @Column()
     latitude: string;
 
     @Column()
@@ -59,12 +42,24 @@ export class ServiceProvider extends UpdateDate{
     @Column()
     isRetired: boolean = false;
 
-  
+    @Column()
+    password: string;
+
+    @OneToMany(() => Address, (address: Address) => address.serviceProvider)
+    address: Address[];
+
     @OneToMany(() => Service, (service: Service) => service.serviceProvider)
-    service: Service;
+    service: Service[];
 
     @OneToMany(() => Payment, (payment: Payment) => payment.serviceProvider)
-    payment: Payment;
+    payment: Payment[];
+
+    @BeforeInsert()
+  async setPassword() {
+    // console.log("password",newPassword,this.password)
+   this.password = await bcrypt.hash(this.password,10);
+  }
+
 
 }
 
