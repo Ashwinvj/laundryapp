@@ -4,8 +4,9 @@ import { ExtractJwt, Strategy as JWTStrategy, StrategyOptions } from 'passport-j
 
 import { Strategy } from 'passport';
 import config from '../config/config';
-import { User } from '../entities/User';
+import { User } from '../entities/User.entity';
 import { UserService } from '../services/users.service';
+import { ServiceProvider } from 'src/entities/serviceProvider.entity';
 
 const { auth } = config;
 
@@ -71,6 +72,16 @@ export class AuthHandler {
     const token = jwt.sign({
       id: user.id,
       email: user.email,
+    }, this.superSecret, {
+        expiresIn: '5d',
+      });
+
+    return token;
+  }
+  generateServiceToken(serviceProvider: ServiceProvider): string {
+    const token = jwt.sign({
+      id: serviceProvider.id,
+      email: serviceProvider.email,
     }, this.superSecret, {
         expiresIn: '5d',
       });

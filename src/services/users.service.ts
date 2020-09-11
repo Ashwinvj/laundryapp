@@ -1,7 +1,7 @@
 import { getManager, Repository, Any } from 'typeorm';
-import { User } from '../entities/User';
+import { User } from '../entities/User.entity';
 import { Logger, ILogger } from '../utils/logger';
-import { Address } from  '../entities/address' ;
+import { Address } from  '../entities/address.entity' ;
 
 export class UserService {
 

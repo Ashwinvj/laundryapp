@@ -10,13 +10,10 @@ module.exports =
     "port": "3300",
     "username": "root1",
     "password": "9944417861",
-<<<<<<< HEAD
-    "database": "productdb",
-=======
-    "database": "test",
->>>>>>> 274f3bf3821de637508242cd8b20f31b1a2f2f1d
+    "database": "laundrydb",
     "synchronize": true,
     "logging": false,
+    "private" : true ,
     "dropSchema": process.env.NODE_ENV === "test" ? true : false,
     "entities": [
       __dirname + "/src/entities/**/*.ts"

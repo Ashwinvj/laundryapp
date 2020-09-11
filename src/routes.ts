@@ -6,6 +6,7 @@ import signupRouter from './controllers/signupController';
 import { AuthHandler } from './middlewares/authHandler';
 import loginRouter from './controllers/loginController';
 import productDetailsRouter from './controllers/productDetailsController';
+import serviceProviderRouter from './controllers/serviceProviderController';
 
 const auth = new AuthHandler();
 const router: Router = Router();
@@ -16,5 +17,6 @@ router.use('/signup', signupRouter);
 router.use('/login', loginRouter);
 router.use('/users', auth.authenticate(), usersRouter);
 router.use('/productDetails', productDetailsRouter);
+router.use('/serviceProvider', serviceProviderRouter);
 
 export default router;

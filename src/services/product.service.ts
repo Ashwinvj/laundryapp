@@ -1,4 +1,4 @@
-import { ProductDetail } from "../entities/service";
+
 import { Repository, getManager } from "typeorm";
 
 
@@ -17,7 +17,7 @@ export class ProductService {
         return this.userRepository.create(data);
       }
 
-     // Inserts a new User into the database.
+     // Inserts a new product into the database.
    
   async insert(data: ProductDetail): Promise<ProductDetail> {
     const newProduct = this.userRepository.create(data);
