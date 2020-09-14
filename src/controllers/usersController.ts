@@ -5,13 +5,116 @@ import config from '../config/config';
 import { ApiResponseError } from '../resources/interfaces/ApiResponseError';
 import { UserService } from '../services/users.service';
 import { body, validationResult } from 'express-validator/check';
+import { AuthHandler } from '../middlewares/authHandler';
 
 const { errors } = config;
 const usersRouter: Router = Router();
 
+usersRouter.route('/signup')
+
+  .post(
+    [
+      body('firstName').isLength({ min: 1 }),
+      body('lastName').isLength({ min: 1 }),
+      body('mobile').isLength({ min: 1 }),
+      body('email').isEmail(),
+      body('password').isLength({ min: 6 }),
+    
+      
+    ],
+    async (req: any, res:any, next: any) => {
+
+      const validationErrors = validationResult(req);
+
+      if (validationErrors.isEmpty()) {
+        const userService = new UserService();
+        await userService.instantiate(req.body);
+        try {
+          const response = await userService.insert(req.body);
+          res.status(HttpStatus.OK).json({
+            success: true,
+            data: response
+          });
+        } catch (err) { // DB exception or some other exception while inserting user
+          console.log(err)
+          const error: ApiResponseError = {
+            code: HttpStatus.BAD_REQUEST,
+            errorObj: err
+          };
+          next(error);
+        }
+      } else {  // validaiton error
+        const error: ApiResponseError = {
+          code: HttpStatus.BAD_REQUEST,
+          errorsArray: validationErrors.array()
+        };
+        next(error);
+      }
+
+    });
+
+    //user login\
+    usersRouter.route('/login')
+  .post(
+    [
+      
+      body('email').isEmail(),
+      body('password').isLength({ min: 1 })
+    ],
+    async (req: Request, res: Response, next: NextFunction) => {
+
+      const validationErrors = validationResult(req);
+      if (validationErrors.isEmpty()) { // no error
+        const userService = new UserService();
+        let user = await userService.getByEmail(req.body.email);
+         if (!user) {
+          res.status(HttpStatus.BAD_REQUEST).json({
+            success: false,
+            message: `${errors.emailNotFound}`
+          });
+          return;
+        }
+        
+
+        // now compare password
+        
+        const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+        // generate token and return
+        
+        if (isPasswordCorrect) {
+          const authHandler = new AuthHandler();
+          const token = authHandler.generateToken(user);
+          res.status(HttpStatus.OK).json({
+            success: true,
+            token: token
+          });
+          return;
+        } else {
+          // incorrect password
+          const error: ApiResponseError = {
+            code: HttpStatus.UNAUTHORIZED,
+            errorObj: {
+              message: errors.incorrectPassword
+            }
+          };
+          next(error);
+          return;
+        }
+        
+      } else {  // validation error
+        const error: ApiResponseError = {
+          code: HttpStatus.BAD_REQUEST,
+          errorsArray: validationErrors.array()
+        };
+        next(error);
+      }
+      
+
+    });
+
 // on routes that end in /users
 // -----------------------------
-usersRouter.route('/')
+usersRouter.route('/getall')
 
   .get(async (req: Request, res: Response, next: NextFunction) => {
 
@@ -69,10 +172,11 @@ usersRouter.route('/profile')
     [
       body('firstName').optional().isLength({ min: 1 }),
       body('lastName').optional().isLength({ min: 1 }),
-      body('email').optional().isEmail(),
+      body('email').optional().isLength({ min: 1 }),
+      body('mobile').optional().isEmail(),
       body('oldPassword').isLength({ min: 6 }),
       body('newPassword').isLength({ min: 6 }),
-      body('address').optional().isLength({ min: 6 })
+      body('address').isLength({ min: 6 })
     ],
     async (req: Request, res: Response, next: NextFunction) => {
       const validationErrors = validationResult(req);
@@ -115,6 +219,7 @@ usersRouter.route('/profile')
           if (req.body.firstName) user.firstName = req.body.firstName;
           if (req.body.lastName) user.lastName = req.body.lastName;
           if (req.body.email) user.email = req.body.email;
+          if (req.body.mobile) user.email = req.body.mobile;
           if (req.body.address) user.address = req.body.address;
           if (req.body.newPassword)  user.password = req.body.newPassword;
 

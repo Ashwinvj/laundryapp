@@ -25,16 +25,16 @@ export class User  extends UpdateDate{
     lastName: string;
 
     @Column()
-    age: number;
+    email: string;
 
     @Column()
-     mobile: string;
+    mobile: string;
 
     @Column()
     password: string;
 
     @Column({default:false})
-    isRetired: boolean
+    isRetired: boolean;
 
     @OneToMany(() => Address, (address: Address) => address.user)
     address: Address[];

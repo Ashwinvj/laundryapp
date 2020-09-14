@@ -16,12 +16,13 @@ serviceProviderRouter.route('/signup')
  .post(
 
     [
-       body('Name').isLength({ min: 1 }),
+       body('name').isLength({ min: 1 }),
        body('description').isLength({ min: 1 }),
        body('mobile').isLength({ min: 1 }),
        body('email').isEmail(),
        body('password').isLength({ min: 6 }),
-       body('address').isLength({ min: 6 })
+       body('address').optional().isLength({ min: 6 }),
+    
 
 ],
 async (req :any , res : any, next : any) =>{
@@ -119,6 +120,35 @@ serviceProviderRouter.route('/login')
 //update serviceProvider
 
 serviceProviderRouter.route('/update')
+
+.get(async(req : any, res :any , next : any) =>{
+  const serviceProviderService = new ServiceProviderService();
+    try {
+      const serviceProvider = await serviceProviderService.getById(req.serviceProvider.id);
+
+      // if user not found
+      if (!serviceProvider) {
+        res.status(HttpStatus.NOT_FOUND).json({
+          success: false,
+          message: `${errors.entityNotFound}: serviceProvider id`
+        });
+        return;
+      }
+      // return found user
+      res.status(HttpStatus.OK).json({
+        success: true,
+        serviceProvider: serviceProvider
+      });
+
+    } catch (err) {
+      const error: ApiResponseError = {
+        code: HttpStatus.BAD_REQUEST,
+        errorObj: err
+      };
+      next(error);
+    }
+
+})
 
 .put(
     [

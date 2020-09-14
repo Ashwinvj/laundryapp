@@ -37,7 +37,7 @@ export class Payment extends UpdateDate {
     totalCost: string;
 
     @Column()
-    status: OrderStatus;
+    status: string;
 
     @Column()
     isRetired: boolean = false;

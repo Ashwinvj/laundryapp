@@ -26,7 +26,7 @@ export class SubService extends UpdateDate{
     cost : number;
 
     @Column()
-    imageURL : URL;
+    imageURL : string;
 
     @Column()
     active : true;

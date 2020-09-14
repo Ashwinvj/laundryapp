@@ -30,14 +30,16 @@ export class ServiceProvider extends UpdateDate{
     @Column()
     email: string;
 
-    @Column()
-    active: true;
+    //@Column()
+    //active: false;
 
-    @Column()
+   /* @Column()
     latitude: string;
 
     @Column()
     longitude: string;
+
+    */
 
     @Column()
     isRetired: boolean = false;
