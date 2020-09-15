@@ -6,7 +6,8 @@ import { Strategy } from 'passport';
 import config from '../config/config';
 import { User } from '../entities/User.entity';
 import { UserService } from '../services/users.service';
-import { ServiceProvider } from 'src/entities/serviceProvider.entity';
+import { ServiceProvider } from '../entities/serviceProvider.entity';
+import { param } from 'express-validator/check';
 
 const { auth } = config;
 
@@ -65,19 +66,22 @@ export class AuthHandler {
   }
 
   /**
-   * Generate JWT token.
+   * Generate JWT token. 
    * @param user
    */
   generateToken(user: User): string {
     const token = jwt.sign({
       id: user.id,
       email: user.email,
-    }, this.superSecret, {
+    },
+     this.superSecret,{
         expiresIn: '5d',
       });
 
     return token;
   }
+  
+/*
   generateServiceToken(serviceProvider: ServiceProvider): string {
     const token = jwt.sign({
       id: serviceProvider.id,
@@ -88,5 +92,6 @@ export class AuthHandler {
 
     return token;
 
-  }
+  }*/
 }
+
